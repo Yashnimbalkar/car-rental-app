@@ -6,10 +6,14 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<h1>Car Rental App </h1>} />
+        <Route path="/" element={<h1>Car Rental App project </h1>} />
       </Routes>
     </BrowserRouter>
   );
 }
 
-export default App;
+// username:rajupanit27 pass: Raju123 
+
+// mongodb+srv://rajupanit27:Raju123@carrentalcluster.xjean8i.mongodb.net/?retryWrites=true&w=majority&appName=CarRentalCluster
+
+export default App; 
