@@ -1,21 +1,22 @@
 const express = require('express');
-const dotenv = require('dotenv');
+const cors = require('cors');
 const connectDB = require('./config/db');
-const authRoutes = require('./routes/auth');
+require('dotenv').config();
 
-dotenv.config();
 const app = express();
 
-app.use(express.json());
-app.use('/api/auth', authRoutes);
+// ✅ Allow frontend (5173) to talk to backend (5000)
+app.use(cors({
+  origin: 'http://localhost:5173',   // frontend URL
+  credentials: true
+}));
 
-app.get('/', (req, res) => {
-  res.send('Car Rental API');
-});
+// Middleware
+app.use(express.json());
+
+// Routes
+app.use('/api/auth', require('./routes/auth'));
 
 const PORT = process.env.PORT || 5000;
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-});
+connectDB();
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
