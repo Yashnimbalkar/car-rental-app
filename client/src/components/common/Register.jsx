@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { AuthContext } from '../../context/AuthContext';
 
 const Register = () => {
+  const { register } = useContext(AuthContext);
   const navigate = useNavigate();
   const [error, setError] = useState('');
 
@@ -16,8 +17,7 @@ const Register = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, values);
-      localStorage.setItem('token', response.data.token);
+      await register(values.name, values.email, values.password);
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');

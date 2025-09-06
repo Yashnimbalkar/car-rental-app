@@ -40,3 +40,32 @@
 .read-the-docs {
   color: #888;
 }
+
+/* Increase base font size */
+body {
+  font-size: 1.1rem; /* Slightly larger than Bootstrap's 1rem (16px) */
+}
+
+/* Ensure containers are wider and spaced */
+.container {
+  max-width: 800px; /* Wider than Bootstrap's default 720px for md */
+  padding: 20px;
+}
+
+/* Larger form inputs and buttons */
+.form-control,
+.btn {
+  font-size: 1.1rem; /* Match body font size */
+  padding: 10px;
+}
+
+/* Profile card adjustments */
+.card {
+  margin-top: 20px;
+}
+.card-title {
+  font-size: 1.5rem;
+}
+.card-text {
+  font-size: 1.2rem;
+}
