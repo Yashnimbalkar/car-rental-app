@@ -4,6 +4,7 @@ import Register from './components/common/Register.jsx';
 import Profile from './components/common/Profile.jsx';
 import ProtectedRoute from './components/common/ProtectedRoute.jsx';
 import CarList from './components/common/CarList.jsx';
+import BookingConfirmation from './components/common/BookingConfirmation.jsx';
 
 const AppRoutes = () => (
   <Routes>
@@ -19,6 +20,7 @@ const AppRoutes = () => (
       }
     />
     <Route path="/cars" element={<CarList />} />
+    <Route path="/booking/:id" element={<BookingConfirmation />} />
   </Routes>
 );
 

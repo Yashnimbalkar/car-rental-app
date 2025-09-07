@@ -1,7 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext.jsx';
+import { AuthContext } from "../../context/AuthContext.jsx";
 import axios from 'axios';
-import { Table, Form } from 'react-bootstrap';
+import { Table, Form, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const CarList = () => {
   const { user } = useContext(AuthContext);
@@ -9,6 +10,7 @@ const CarList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [maxPrice, setMaxPrice] = useState(100);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCars = async () => {
@@ -27,6 +29,25 @@ const CarList = () => {
     const matchesPrice = car.pricePerDay <= maxPrice;
     return matchesSearch && matchesPrice;
   });
+
+  const handleBook = async (carId) => {
+    if (!user) {
+      navigate('/login');
+      return;
+    }
+    try {
+      const startDate = new Date().toISOString().split('T')[0]; // Today
+      const endDate = new Date(Date.now() + 86400000).toISOString().split('T')[0]; // Tomorrow
+      await axios.put(
+        `${import.meta.env.VITE_API_URL}/cars/book/${carId}`,
+        { startDate, endDate },
+        { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+      );
+      navigate(`/booking/${carId}`); // Placeholder until booking ID is returned
+    } catch (err) {
+      setError('Booking failed');
+    }
+  };
 
   return (
     <div className="container mt-5">
@@ -70,12 +91,13 @@ const CarList = () => {
               <td>{car.availability ? 'Yes' : 'No'}</td>
               {user && (
                 <td>
-                  <button
+                  <Button
                     className="btn btn-primary"
                     disabled={!car.availability}
+                    onClick={() => handleBook(car._id)}
                   >
                     Book
-                  </button>
+                  </Button>
                 </td>
               )}
             </tr>
