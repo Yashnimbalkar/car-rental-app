@@ -1,0 +1,16 @@
+ Run the App
+--------------
+Backend: npm run dev (inside backend/)   http://localhost:5000
+Frontend: npm start (inside frontend/)   http://localhost:3000
+
+
+login As User: 
+email 	: yogesh@gmail.com ,jane@example.com ,otherwise singup and create new user
+password: 123456           ,password123      , 
+
+
+
+login As Admin  or  http://localhost:3000/admin
+email 	: admin@example.com
+password: admin123
+

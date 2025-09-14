@@ -1,0 +1,100 @@
+Car Rental Pro - Simple Run Instructions
+========================================
+
+This guide explains how to run the Car Rental Pro project locally after cloning from GitHub.
+
+----------------------------------------
+Prerequisites
+----------------------------------------
+- Node.js (v16+) and npm installed (https://nodejs.org)
+- MongoDB Atlas account (https://cloud.mongodb.com)
+- Git installed
+- Postman (optional, for testing APIs)
+
+----------------------------------------
+Steps to Run
+----------------------------------------
+
+1. Clone the Repository
+------------------------
+git clone https://github.com/your-username/car-rental-website.git
+cd car-rental-website
+(Replace "your-username" with your GitHub username)
+
+2. Set Up Backend
+-----------------
+cd backend
+npm install
+
+Create backend/.env file with:
+MONGO_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/car_rental?retryWrites=true&w=majority
+JWT_SECRET=your-secret-key
+PORT=5000
+
+3. Set Up Frontend
+------------------
+cd frontend
+npm install
+
+Create frontend/.env file with:
+REACT_APP_API_URL=http://localhost:5000/api
+
+4. Seed Initial Data
+---------------------
+Start backend:
+npm run dev
+
+Expected output: "Server running on port 5000" and "MongoDB connected"
+
+a) Create Admin User
+POST http://localhost:5000/api/auth/signup
+Body:
+{
+  "name": "Admin",
+  "email": "admin@example.com",
+  "password": "admin123",
+  "phone": "0987654321"
+}
+
+b) Set Admin Role
+In Atlas -> car_rental -> users -> set "role": "admin" for admin@example.com
+
+c) Seed Cars
+POST http://localhost:5000/api/cars (use admin token in Authorization header)
+
+d) Create Test User
+POST http://localhost:5000/api/auth/signup
+Body:
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "password": "password123",
+  "phone": "1112223333"
+}
+
+5. Run the App
+--------------
+Backend: npm run dev (inside backend/)
+Frontend: npm start (inside frontend/)
+
+Visit http://localhost:3000
+
+----------------------------------------
+Test the App
+----------------------------------------
+- Home: shows cars, logos, reviews
+- Login as user: jane@example.com / password123 -> /dashboard
+- Login as admin: admin@example.com / admin123 -> /admin
+- Browse cars: /cars -> book -> booking visible in /dashboard
+- Admin panel: manage cars, users, bookings
+
+----------------------------------------
+Troubleshooting
+----------------------------------------
+- Backend fails: check .env MONGO_URI, IP whitelist, logs
+- Frontend errors: check Console/Network, REACT_APP_API_URL
+- Postman 401/403: re-login for token, check admin role
+
+----------------------------------------
+Last Updated: September 14, 2025
+----------------------------------------
